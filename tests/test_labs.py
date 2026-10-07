@@ -49,6 +49,8 @@ class Lab04VariantBTests(unittest.TestCase):
             FileManager("data.txt", "invalid")
         with self.assertRaises(ValueError):
             FileManager("bad?.txt", "r")
+        with self.assertRaises(ValueError):
+            FileManager("bad:name.txt", "r")
         self.assertEqual(ValidatedMode.ALLOWED_MODES,
                          {"r", "w", "a", "r+", "w+", "a+"})
 

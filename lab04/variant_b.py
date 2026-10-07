@@ -21,7 +21,8 @@ class ValidatedFilename:
         path = Path(value)
         if any(char in '<>"|?*' or ord(char) < 32 for char in value):
             raise ValueError("имя файла содержит недопустимые символы")
-        if any(":" in part for part in path.parts[1:]):
+        drive = path.drive if path.is_absolute() else ""
+        if ":" in value[len(drive):]:
             raise ValueError("двоеточие допустимо только в обозначении диска")
         setattr(obj, self.storage_name, value)
 
