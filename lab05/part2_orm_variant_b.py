@@ -301,3 +301,27 @@ class Article(Model):
     content = StringField()
     author_id = IntegerField()
     views = IntegerField(default=0)
+
+
+def main():
+    """Вывести результаты сохранения, запросов и отката транзакции."""
+    print("Лабораторная 05, часть 2, вариант B — мини-ORM")
+    with TransactionManager():
+        user = User(name="Анна", email="anna@example.com", age=21)
+        print("Сохранение пользователя:", user.save())
+        article = Article(title="Алгоритмы", content="Лабораторная 05",
+                          author_id=user.id)
+        print("Сохранение статьи:", article.save())
+    print("Пользователь по ID:", User.get(user.id))
+    print("Пользователи старше 20:", list(QuerySet(User).filter(age=21)))
+    print("Число статей:", QuerySet(Article).count())
+    try:
+        with TransactionManager():
+            User(name="Временный", email="temp@example.com").save()
+            raise RuntimeError("отмена транзакции")
+    except RuntimeError:
+        print("Транзакция отменена; число пользователей:", QuerySet(User).count())
+
+
+if __name__ == "__main__":
+    main()

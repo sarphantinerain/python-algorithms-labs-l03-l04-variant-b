@@ -129,3 +129,19 @@ class FileManagerWithLogging(LogManager, SecureManager, FileManager):
     def write(self, data: str) -> None:
         super().write(data)
         self.log_operation("записан")
+
+
+def main():
+    """Прочитать исходный файл через собственный файловый менеджер."""
+    print("Лабораторная 04, вариант B — файловый менеджер")
+    source = Path(__file__).resolve()
+    with FileManagerWithLogging(str(source), "r") as manager:
+        content = manager.read()
+        print("Прочитанный файл:", source.name)
+        print("Количество символов:", len(content))
+    print("Файл закрыт:", manager._file is None)
+    print("Порядок MRO:", " -> ".join(cls.__name__ for cls in FileManagerWithLogging.__mro__))
+
+
+if __name__ == "__main__":
+    main()

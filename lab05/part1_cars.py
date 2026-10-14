@@ -104,3 +104,26 @@ def get_car_list(csv_filename):
                 continue
             car_list.append(vehicle)
     return car_list
+
+
+def main():
+    """Прочитать приложенный CSV и вывести созданные объекты."""
+    csv_file = os.path.join(os.path.dirname(__file__), "cars.csv")
+    vehicles = get_car_list(csv_file)
+    print("Лабораторная 05, часть 1 — автомобили")
+    print("Корректных записей:", len(vehicles))
+    for vehicle in vehicles:
+        details = (f"{vehicle.car_type}: {vehicle.brand}, "
+                   f"грузоподъёмность {vehicle.carrying} т, "
+                   f"фото {vehicle.photo_file_name}")
+        if isinstance(vehicle, Car):
+            details += f", мест {vehicle.passenger_seats_count}"
+        elif isinstance(vehicle, Truck):
+            details += f", объём кузова {vehicle.get_body_volume()} куб. м"
+        else:
+            details += f", описание: {vehicle.extra}"
+        print(details)
+
+
+if __name__ == "__main__":
+    main()

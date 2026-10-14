@@ -90,3 +90,19 @@ def even_squares_pipeline():
         partial(transform_data, func=square),
         sum_values,
     )
+
+
+def main():
+    """Показать результаты компонентов варианта B в консоли."""
+    print("Лабораторная 03, вариант B — конвейер генераторов")
+    print("Числа:", list(generate_numbers(1, 11)))
+    print("Чётные квадраты (сумма):", even_squares_pipeline()(range(1, 11)))
+    print("Партии по 3:", list(batch_process(generate_numbers(1, 8), 3)))
+    print("Среднее:", aggregate(generate_numbers(1, 6), average))
+    print("Группы:", list(group_sorted([1, 1, 2, 2, 3], lambda x: x)))
+    print("Пары:", list(pairs([1, 2, 3])))
+    print("Декартово произведение:", list(cartesian([1, 2], ["A", "B"])))
+
+
+if __name__ == "__main__":
+    main()
