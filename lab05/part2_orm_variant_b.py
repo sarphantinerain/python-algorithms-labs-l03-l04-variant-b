@@ -313,7 +313,7 @@ def main():
                           author_id=user.id)
         print("Сохранение статьи:", article.save())
     print("Пользователь по ID:", User.get(user.id))
-    print("Пользователи старше 20:", list(QuerySet(User).filter(age=21)))
+    print("Пользователи с возрастом 21:", list(QuerySet(User).filter(age=21)))
     print("Число статей:", QuerySet(Article).count())
     try:
         with TransactionManager():
